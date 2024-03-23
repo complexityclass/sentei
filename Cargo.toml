@@ -1,0 +1,16 @@
+[workspace]
+members = ["shared"]
+resolver = "1"
+
+[workspace.package]
+authors = ["Complexityclass"]
+edition = "2021"
+repository = "https://github.com/complexityclass/sentei.git"
+license = "Apache-2.0"
+keywords = ["sentei"]
+rust-version = "1.66"
+
+[workspace.dependencies]
+anyhow = "1.0.79"
+crux_core = "0.7"
+serde = "1.0.196"
