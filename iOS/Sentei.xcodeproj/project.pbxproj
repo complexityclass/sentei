@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		74B4C7952BB0C7DB0003BCAC /* core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B4C7942BB0C7DB0003BCAC /* core.swift */; };
+		74B4C7972BB0C8030003BCAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B4C7962BB0C8030003BCAC /* ContentView.swift */; };
+		74B4C7992BB0C8350003BCAC /* SenteiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B4C7982BB0C8350003BCAC /* SenteiApp.swift */; };
+		7DAC0E3FF1E4845525F73793 /* uniffi-bindgen in Resources */ = {isa = PBXBuildFile; fileRef = B49CD93F33CCA992F7444699 /* uniffi-bindgen */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		ABF69B8D0016ADDA0A233B2F /* SharedTypes in Frameworks */ = {isa = PBXBuildFile; productRef = 7C7664773CA250A8631AA9D1 /* SharedTypes */; };
+		B8DA40227D2374E0053F7CDB /* libshared_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A6B71E03AEBB874B10F5A7 /* libshared_static.a */; };
+		F3872B026E7EE8F276860A53 /* shared.udl in Sources */ = {isa = PBXBuildFile; fileRef = 77A2F5085D3E1789D73511D4 /* shared.udl */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		9C31F54F05B03349A319D4FC /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.udl";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			name = "Generate FFI";
+			outputFiles = (
+				"$(PROJECT_DIR)/generated/$(INPUT_FILE_BASE).swift",
+				"$(PROJECT_DIR)/generated/$(INPUT_FILE_BASE)FFI.h",
+			);
+			outputFilesCompilerFlags = (
+			);
+			runOncePerArchitecture = 0;
+			script = "#!/bin/bash\nset -e\n\n# Skip during indexing phase in XCode 13+\nif [ \"$ACTION\" == \"indexbuild\" ]; then\n  echo \"Not building *.udl files during indexing.\"\n  exit 0\nfi\n\n# Skip for preview builds\nif [ \"$ENABLE_PREVIEWS\" = \"YES\" ]; then\n  echo \"Not building *.udl files during preview builds.\"\n  exit 0\nfi\n\ncd \"${INPUT_FILE_DIR}/..\"\n\"${BUILD_DIR}/debug/uniffi-bindgen\" generate \"src/${INPUT_FILE_NAME}\" --language swift --out-dir \"${PROJECT_DIR}/generated\"\n";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXContainerItemProxy section */
+		2130406C17ED3FA0AFF72295 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0A80D4330D76474FC1F2105 /* Shared */;
+			proxyType = 1;
+			remoteGlobalIDString = CA02FA85CE9E4296ADE0F606;
+			remoteInfo = "uniffi-bindgen-bin";
+		};
+		54D40B62ECE545B83B7B2237 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0A80D4330D76474FC1F2105 /* Shared */;
+			proxyType = 2;
+			remoteGlobalIDString = CA02FA85CE9E8109328FB0D5;
+			remoteInfo = "uniffi-bindgen-bin";
+		};
+		74B4C78C2BB058E90003BCAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0A80D4330D76474FC1F2105 /* Shared */;
+			proxyType = 2;
+			remoteGlobalIDString = CA01C51694BE10F7F7FCAC5B;
+			remoteInfo = "shared-cdylib";
+		};
+		7D40168A95B007D83FEC74C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0A80D4330D76474FC1F2105 /* Shared */;
+			proxyType = 1;
+			remoteGlobalIDString = CA0049BF7D4FD346A0A05154;
+			remoteInfo = "shared-staticlib";
+		};
+		9E8592F9A364F544413947CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0A80D4330D76474FC1F2105 /* Shared */;
+			proxyType = 2;
+			remoteGlobalIDString = CA0049BF7D4FFB09138082B7;
+			remoteInfo = "shared-staticlib";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6B9473E6D967963279C89A62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7329ED74CDB7187C6C33E505 /* Sentei.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Sentei.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		74B4C7942BB0C7DB0003BCAC /* core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = core.swift; sourceTree = "<group>"; };
+		74B4C7962BB0C8030003BCAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		74B4C7982BB0C8350003BCAC /* SenteiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenteiApp.swift; sourceTree = "<group>"; };
+		77A2F5085D3E1789D73511D4 /* shared.udl */ = {isa = PBXFileReference; lastKnownFileType = text; path = shared.udl; sourceTree = "<group>"; };
+		C0A80D4330D76474FC1F2105 /* Shared */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Shared; path = ../shared/shared.xcodeproj; sourceTree = "<group>"; };
+		E03CFB6E53BE5D03E7F1BFD2 /* SharedTypes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SharedTypes; path = ../shared_types/generated/swift/SharedTypes; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		55D6B98E07871F7B0F15F924 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8DA40227D2374E0053F7CDB /* libshared_static.a in Frameworks */,
+				ABF69B8D0016ADDA0A233B2F /* SharedTypes in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		06D222B47198D64A6EE5F535 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				C0A80D4330D76474FC1F2105 /* Shared */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		4297A43486F8AB4444943AFA = {
+			isa = PBXGroup;
+			children = (
+				61926D50479CE3F15A44B597 /* Packages */,
+				E5890296DA89FCE2D85483A2 /* Sentei */,
+				AAD5BB31BFA2B25FF730B65A /* src */,
+				D10A31D2CC5E621502C8433D /* Products */,
+				06D222B47198D64A6EE5F535 /* Projects */,
+			);
+			sourceTree = "<group>";
+		};
+		61926D50479CE3F15A44B597 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E03CFB6E53BE5D03E7F1BFD2 /* SharedTypes */,
+			);
+			name = Packages;
+			sourceTree = SOURCE_ROOT;
+		};
+		AAD5BB31BFA2B25FF730B65A /* src */ = {
+			isa = PBXGroup;
+			children = (
+				77A2F5085D3E1789D73511D4 /* shared.udl */,
+			);
+			name = src;
+			path = ../shared/src;
+			sourceTree = "<group>";
+		};
+		D10A31D2CC5E621502C8433D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7329ED74CDB7187C6C33E505 /* Sentei.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E5890296DA89FCE2D85483A2 /* Sentei */ = {
+			isa = PBXGroup;
+			children = (
+				6B9473E6D967963279C89A62 /* Info.plist */,
+				74B4C7942BB0C7DB0003BCAC /* core.swift */,
+				74B4C7962BB0C8030003BCAC /* ContentView.swift */,
+				74B4C7982BB0C8350003BCAC /* SenteiApp.swift */,
+			);
+			path = Sentei;
+			sourceTree = "<group>";
+		};
+		E6ADF3F6EDE3C246A5B0A450 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				71A6B71E03AEBB874B10F5A7 /* libshared_static.a */,
+				74B4C78D2BB058E90003BCAC /* shared.dylib */,
+				B49CD93F33CCA992F7444699 /* uniffi-bindgen */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		225398400BE0D4C45010DDF9 /* Sentei */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 256F1DBC189970795DCFB25E /* Build configuration list for PBXNativeTarget "Sentei" */;
+			buildPhases = (
+				9583DEAC6023D2451F824ADF /* Sources */,
+				554A947272203C04B383438D /* Resources */,
+				55D6B98E07871F7B0F15F924 /* Frameworks */,
+			);
+			buildRules = (
+				9C31F54F05B03349A319D4FC /* PBXBuildRule */,
+			);
+			dependencies = (
+				9E4A7FE7E3B783522E67F0BA /* PBXTargetDependency */,
+				C2C5AEA3CED57FF3345A28CF /* PBXTargetDependency */,
+			);
+			name = Sentei;
+			packageProductDependencies = (
+				7C7664773CA250A8631AA9D1 /* SharedTypes */,
+			);
+			productName = Sentei;
+			productReference = 7329ED74CDB7187C6C33E505 /* Sentei.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AED71616885A21D8052AC1AD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1200;
+			};
+			buildConfigurationList = 03406DA83691B50F81E8A18A /* Build configuration list for PBXProject "Sentei" */;
+			compatibilityVersion = "Xcode 11.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4297A43486F8AB4444943AFA;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E6ADF3F6EDE3C246A5B0A450 /* Products */;
+					ProjectRef = C0A80D4330D76474FC1F2105 /* Shared */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				225398400BE0D4C45010DDF9 /* Sentei */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		71A6B71E03AEBB874B10F5A7 /* libshared_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libshared_static.a;
+			remoteRef = 9E8592F9A364F544413947CE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74B4C78D2BB058E90003BCAC /* shared.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = shared.dylib;
+			remoteRef = 74B4C78C2BB058E90003BCAC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B49CD93F33CCA992F7444699 /* uniffi-bindgen */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "uniffi-bindgen";
+			remoteRef = 54D40B62ECE545B83B7B2237 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		554A947272203C04B383438D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DAC0E3FF1E4845525F73793 /* uniffi-bindgen in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9583DEAC6023D2451F824ADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74B4C7952BB0C7DB0003BCAC /* core.swift in Sources */,
+				F3872B026E7EE8F276860A53 /* shared.udl in Sources */,
+				74B4C7972BB0C8030003BCAC /* ContentView.swift in Sources */,
+				74B4C7992BB0C8350003BCAC /* SenteiApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9E4A7FE7E3B783522E67F0BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "uniffi-bindgen-bin";
+			targetProxy = 2130406C17ED3FA0AFF72295 /* PBXContainerItemProxy */;
+		};
+		C2C5AEA3CED57FF3345A28CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "shared-staticlib";
+			targetProxy = 7D40168A95B007D83FEC74C7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B1533F58DC5D9D2A3066210 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8A2BCFB756A725A81BAB09C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AECA0BFEFC448E9EC65C84AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = Sentei/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-w",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.complexityclass.sentei.Sentei;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = generated/sharedFFI.h;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DBD0D7238B7E27C8682E4882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = Sentei/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-w",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.complexityclass.sentei.Sentei;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = generated/sharedFFI.h;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		03406DA83691B50F81E8A18A /* Build configuration list for PBXProject "Sentei" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B1533F58DC5D9D2A3066210 /* Debug */,
+				8A2BCFB756A725A81BAB09C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		256F1DBC189970795DCFB25E /* Build configuration list for PBXNativeTarget "Sentei" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AECA0BFEFC448E9EC65C84AD /* Debug */,
+				DBD0D7238B7E27C8682E4882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7C7664773CA250A8631AA9D1 /* SharedTypes */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedTypes;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AED71616885A21D8052AC1AD /* Project object */;
+}
