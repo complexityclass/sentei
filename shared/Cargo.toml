@@ -12,6 +12,7 @@ name = "shared"
 typegen = ["crux_core/typegen"]
 
 [dependencies]
+go_bot = { path = "../go_bot" }
 crux_core.workspace = true
 serde = { workspace = true, features = ["derive"] }
 lazy_static = "1.4.0"
