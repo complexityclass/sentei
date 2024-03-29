@@ -1,6 +1,9 @@
 use crate::player::Player;
 
 mod player;
+mod point;
+mod r#move;
+mod stones_string;
 
 pub struct Game {
     pub human: Player,
