@@ -3,14 +3,15 @@ use crate::point::Point;
 use std::collections::HashSet;
 use std::fmt;
 
+#[derive(Clone)]
 pub struct StonesString {
-    color: Player,
-    stones: HashSet<Point>,
-    liberties: HashSet<Point>,
+    pub color: Player,
+    pub stones: HashSet<Point>,
+    pub liberties: HashSet<Point>,
 }
 
 impl StonesString {
-    fn new(color: Player, stones: &[Point], liberties: &[Point]) -> Self {
+    pub(crate) fn new(color: Player, stones: &[Point], liberties: &[Point]) -> Self {
         StonesString {
             color,
             stones: stones.iter().cloned().collect(),
@@ -18,15 +19,15 @@ impl StonesString {
         }
     }
 
-    fn remove_liberty(&mut self, point: &Point) {
+    pub(crate) fn remove_liberty(&mut self, point: &Point) {
         self.liberties.remove(point);
     }
 
-    fn add_liberty(&mut self, point: &Point) {
+    pub(crate) fn add_liberty(&mut self, point: &Point) {
         self.liberties.insert(point.clone());
     }
 
-    fn merge(&self, other: &StonesString) -> Self {
+    pub(crate) fn merge(&self, other: &StonesString) -> Self {
         assert_eq!(self.color, other.color);
 
         let combine = |a: &HashSet<_>, b: &HashSet<_>| {
@@ -50,7 +51,7 @@ impl StonesString {
         }
     }
 
-    fn liberties_count(&self) -> usize {
+    pub(crate) fn liberties_count(&self) -> usize {
         self.liberties.len()
     }
 }

@@ -1,7 +1,7 @@
-#[derive(PartialEq, Clone, Debug, Eq, Hash)]
+#[derive(PartialEq, Clone, Debug, Eq, Hash, Copy)]
 pub(crate) struct Point {
-    row: i32,
-    col: i32
+    pub row: i32,
+    pub col: i32
 }
 
 impl Point {
@@ -10,7 +10,7 @@ impl Point {
         Point { row, col }
     }
 
-    fn neighbors(&self) -> Vec<Point> {
+    pub(crate) fn neighbors(&self) -> Vec<Point> {
         vec![
             Point::new(self.row - 1, self.col),
             Point::new(self.row + 1, self.col),
