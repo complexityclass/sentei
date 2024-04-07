@@ -1,3 +1,5 @@
+extern crate core;
+
 use crate::player::Player;
 
 mod player;

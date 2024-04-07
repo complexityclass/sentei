@@ -1,7 +1,10 @@
+use core::fmt;
+use std::collections::HashMap;
+use std::fmt::Formatter;
+
 use crate::player::Player;
 use crate::point::Point;
 use crate::stones_string::StonesString;
-use std::collections::HashMap;
 
 pub struct Board {
     pub num_rows: i32,
@@ -64,6 +67,9 @@ impl Board {
 
         for mut other_color_string in &mut adj_opposite_color {
             other_color_string.remove_liberty(&point);
+            for stone in &other_color_string.stones {
+                self.grid.insert(stone.clone(), other_color_string.clone());
+            }
         }
 
         for other_color_string in &adj_opposite_color {
@@ -106,10 +112,36 @@ impl Board {
     }
 }
 
+impl fmt::Debug for Board {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        let horizontal_line = "─".repeat((self.num_cols * 3 + 1) as usize);
+        writeln!(f, "┌{}┐", horizontal_line)?;
+        for i in 1..self.num_rows + 1 {
+            write!(f, "│")?;
+            for j in 1..self.num_cols + 1 {
+                let point = Point { row: i, col: j };
+                let cell = match self.get_string(point) {
+                    Some(string) => match string.color {
+                        Player::Black => "●",
+                        Player::White => "○",
+                        _ => " ",
+                    },
+                    None => ".",
+                };
+                write!(f, " {} ", cell)?;
+            }
+            writeln!(f, "│")?;
+        }
+        writeln!(f, "└{}┘", horizontal_line)?;
+        Ok(())
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::*;
     use crate::player::Player::{Black, White};
+
+    use super::*;
 
     #[test]
     #[should_panic(expected = "Item out of the board size")]
@@ -200,6 +232,19 @@ mod tests {
     }
 
     #[test]
+    fn test_liberty_reduce() {
+        let mut board = Board::new(2, 2);
+        board.place_stone(White, Point::new(1, 1));
+        assert_eq!(board.get(Point::new(1, 1)), Some(White));
+
+        board.place_stone(Black, Point::new(1, 2));
+        assert_eq!(board.get(Point::new(1, 2)), Some(Black));
+
+        board.place_stone(Black, Point::new(2, 1));
+        assert_eq!(board.get(Point::new(2, 1)), Some(Black));
+    }
+
+    #[test]
     fn test_capture() {
         let mut board = Board::new(4, 4);
         // Put white stone in the middle surrounded by 3 black stones
@@ -223,7 +268,6 @@ mod tests {
         board.place_stone(Black, Point::new(3, 2));
 
         // White stone captured
-        todo!("Fix this test!");
         assert!(board.get(wp).is_none());
 
         // Black has one more liberty
