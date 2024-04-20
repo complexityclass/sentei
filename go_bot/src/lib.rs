@@ -7,6 +7,7 @@ mod point;
 mod r#move;
 mod stones_string;
 mod board;
+mod game_state;
 
 pub struct Game {
     pub human: Player,

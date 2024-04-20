@@ -12,6 +12,16 @@ pub struct Board {
     grid: HashMap<Point, StonesString>,
 }
 
+impl Clone for Board {
+    fn clone(&self) -> Self {
+        Self {
+            num_rows: self.num_rows,
+            num_cols: self.num_cols,
+            grid: self.grid.clone()
+        }
+    }
+}
+
 impl Board {
     pub fn new(rows: i32, cols: i32) -> Self {
         Board {
@@ -106,7 +116,7 @@ impl Board {
         Some(string.color.clone())
     }
 
-    fn get_string(&self, point: Point) -> Option<&StonesString> {
+    pub fn get_string(&self, point: Point) -> Option<&StonesString> {
         let string = self.grid.get(&point)?;
         Some(string)
     }

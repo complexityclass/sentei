@@ -1,6 +1,7 @@
 use crate::point::Point;
 
-enum Move {
+#[derive(Clone, PartialEq)]
+pub enum Move {
     Point(Point),
     Pass,
     Resign
