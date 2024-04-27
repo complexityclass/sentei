@@ -8,7 +8,7 @@ impl Player {
     pub fn other(&self) -> Self {
         match self {
             Player::Black => Player::White,
-            _ => Player::Black
+            _ => Player::Black,
         }
     }
 }

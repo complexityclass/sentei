@@ -38,7 +38,9 @@ mod tests {
 
     #[test]
     fn test_view_model() {
-        let vm = ViewModel {count: "6".to_string()};
+        let vm = ViewModel {
+            count: "6".to_string(),
+        };
         assert_eq!(vm.count, "6");
     }
 

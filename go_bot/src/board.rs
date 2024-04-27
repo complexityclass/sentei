@@ -17,8 +17,17 @@ impl Clone for Board {
         Self {
             num_rows: self.num_rows,
             num_cols: self.num_cols,
-            grid: self.grid.clone()
+            grid: self.grid.clone(),
         }
+    }
+}
+
+impl PartialEq for Board {
+    fn eq(&self, other: &Self) -> bool {
+        if self.num_cols != other.num_cols || self.num_rows != other.num_rows {
+            return false;
+        }
+        return self.grid == other.grid;
     }
 }
 

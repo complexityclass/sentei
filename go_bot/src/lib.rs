@@ -2,12 +2,12 @@ extern crate core;
 
 use crate::player::Player;
 
-mod player;
-mod point;
-mod r#move;
-mod stones_string;
 mod board;
 mod game_state;
+mod r#move;
+mod player;
+mod point;
+mod stones_string;
 
 pub struct Game {
     pub human: Player,
@@ -16,12 +16,13 @@ pub struct Game {
 
 impl Game {
     pub fn new(is_human_start: bool) -> Self {
-        let human = if is_human_start { Player::Black } else { Player::White };
+        let human = if is_human_start {
+            Player::Black
+        } else {
+            Player::White
+        };
         let ai = human.other();
-        Game {
-            human,
-            ai
-        }
+        Game { human, ai }
     }
 }
 

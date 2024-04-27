@@ -1,11 +1,10 @@
 #[derive(PartialEq, Clone, Debug, Eq, Hash, Copy)]
 pub(crate) struct Point {
     pub row: i32,
-    pub col: i32
+    pub col: i32,
 }
 
 impl Point {
-
     pub(crate) fn new(row: i32, col: i32) -> Self {
         Point { row, col }
     }
@@ -15,7 +14,7 @@ impl Point {
             Point::new(self.row - 1, self.col),
             Point::new(self.row + 1, self.col),
             Point::new(self.row, self.col - 1),
-            Point::new(self.row, self.col + 1)
+            Point::new(self.row, self.col + 1),
         ]
     }
 }

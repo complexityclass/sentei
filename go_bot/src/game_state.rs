@@ -65,15 +65,40 @@ impl GameState {
     }
 
     fn is_move_self_capture(&self, player: Player, mv: Move) -> bool {
-        if let Move::Point(p) = mv {
+        return if let Move::Point(p) = mv {
             let mut next_board = self.board.clone();
             println!("{:?}", next_board);
             next_board.place_stone(player, p);
             let next_string = next_board.get_string(p);
-            return next_string.is_some() && next_string.unwrap().liberties_count() == 0;
+            next_string.is_some() && next_string.unwrap().liberties_count() == 0
         } else {
-            return false;
-        }
+            false
+        };
+    }
+
+    fn situation(&self) -> (Player, Board) {
+        return (self.next_player, self.board.clone());
+    }
+
+    fn does_move_violate_ko(&self, player: Player, mv: Move) -> bool {
+        return match mv {
+            Move::Point(point) => {
+                let mut next_board = self.board.clone();
+                next_board.place_stone(player, point);
+                let next_situation = (player.other(), next_board);
+                let mut past_state = self.previous_state.as_ref();
+
+                while let Some(pstate) = past_state {
+                    if pstate.situation() == next_situation {
+                        return true;
+                    }
+                    past_state = pstate.previous_state.as_ref();
+                }
+
+                false
+            }
+            _ => false,
+        };
     }
 }
 
@@ -148,5 +173,36 @@ mod tests {
             format!("{:?}", game_state.board),
             String::from("┌──────────┐\n│ ●  .  . │\n│ ○  .  . │\n│ .  .  . │\n└──────────┘\n")
         );
+    }
+
+    #[test]
+    fn test_move_violates_ko() {
+        let board = Board::new(5, 5);
+
+        let moves = vec![
+            Point::new(2, 2),
+            Point::new(2, 3),
+            Point::new(3, 1),
+            Point::new(3, 4),
+            Point::new(4, 2),
+            Point::new(4, 3),
+            Point::new(3, 3),
+            Point::new(3, 2),
+        ];
+
+        let mut game_state = GameState {
+            board,
+            next_player: Player::Black,
+            previous_state: None,
+            last_move: None,
+        };
+
+        for mv in moves {
+            assert!(!game_state.does_move_violate_ko(game_state.next_player, Move::Point(mv)));
+            game_state = game_state.apply_move(Move::Point(mv));
+            println!("{:?}", game_state.board);
+        }
+
+        assert!(game_state.does_move_violate_ko(Black, Move::Point(Point::new(3, 3))));
     }
 }
