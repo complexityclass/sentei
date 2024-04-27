@@ -3,6 +3,7 @@ use crate::player::Player;
 use crate::player::Player::Black;
 use crate::r#move::Move;
 use crate::r#move::Move::Pass;
+use crate::r#move::Move::Resign;
 use std::cmp::PartialEq;
 
 #[derive(Clone)]
@@ -43,6 +44,22 @@ impl GameState {
             previous_state: Some(Box::new(self.clone())),
             last_move: Some(game_move.clone()),
         }
+    }
+
+    fn is_valid_move(&self, mv: Move) -> bool {
+        if self.is_over() {
+            return false;
+        }
+
+        return match mv {
+            Pass => true,
+            Resign => true,
+            Move::Point(point) => {
+                self.board.get_string(point).is_none()
+                    && !self.is_move_self_capture(self.next_player, mv)
+                    && !self.does_move_violate_ko(self.next_player, mv)
+            }
+        };
     }
 
     fn is_over(&self) -> bool {
@@ -200,9 +217,39 @@ mod tests {
         for mv in moves {
             assert!(!game_state.does_move_violate_ko(game_state.next_player, Move::Point(mv)));
             game_state = game_state.apply_move(Move::Point(mv));
-            println!("{:?}", game_state.board);
         }
 
         assert!(game_state.does_move_violate_ko(Black, Move::Point(Point::new(3, 3))));
+    }
+
+    #[test]
+    fn test_is_valid_move() {
+        let board = Board::new(5, 5);
+
+        let moves = vec![
+            Point::new(2, 2),
+            Point::new(2, 3),
+            Point::new(3, 1),
+            Point::new(3, 4),
+            Point::new(4, 2),
+            Point::new(4, 3),
+            Point::new(3, 3),
+            Point::new(3, 2),
+        ];
+
+        let mut game_state = GameState {
+            board,
+            next_player: Player::Black,
+            previous_state: None,
+            last_move: None,
+        };
+
+        for mv in moves {
+            assert!(game_state.is_valid_move(Move::Point(mv)));
+            game_state = game_state.apply_move(Move::Point(mv));
+        }
+
+        assert!(!game_state.is_valid_move(Move::Point(Point::new(2, 2))));
+        assert!(!game_state.is_valid_move(Move::Point(Point::new(3, 3))));
     }
 }
