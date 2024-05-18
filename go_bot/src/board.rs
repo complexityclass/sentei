@@ -113,14 +113,14 @@ impl Board {
         }
     }
 
-    fn is_on_grid(&self, point: Point) -> bool {
+    pub fn is_on_grid(&self, point: Point) -> bool {
         return 1 <= point.row
             && point.row <= self.num_rows
             && 1 <= point.col
             && point.col <= self.num_cols;
     }
 
-    fn get(&self, point: Point) -> Option<Player> {
+    pub fn get(&self, point: Point) -> Option<Player> {
         let string = self.grid.get(&point)?;
         Some(string.color.clone())
     }
