@@ -7,15 +7,15 @@ use crate::r#move::Move::Resign;
 use std::cmp::PartialEq;
 
 #[derive(Clone)]
-struct GameState {
-    board: Board,
-    next_player: Player,
+pub struct GameState {
+    pub board: Board,
+    pub next_player: Player,
     previous_state: Option<Box<GameState>>,
     last_move: Option<Move>,
 }
 
 impl GameState {
-    fn new(size: i32) -> Self {
+    pub fn new(size: i32) -> Self {
         GameState {
             board: Board::new(size, size),
             next_player: Black,
@@ -24,7 +24,7 @@ impl GameState {
         }
     }
 
-    fn apply_move(&self, game_move: Move) -> GameState {
+    pub fn apply_move(&self, game_move: Move) -> GameState {
         let next_board = match game_move {
             Move::Point(p) => {
                 let mut next_board = self.board.clone();
@@ -46,7 +46,7 @@ impl GameState {
         }
     }
 
-    fn is_valid_move(&self, mv: Move) -> bool {
+    pub fn is_valid_move(&self, mv: Move) -> bool {
         if self.is_over() {
             return false;
         }
@@ -62,7 +62,7 @@ impl GameState {
         };
     }
 
-    fn is_over(&self) -> bool {
+    pub fn is_over(&self) -> bool {
         match &self.last_move {
             None => false,
             Some(mv) => match mv {
@@ -84,7 +84,6 @@ impl GameState {
     fn is_move_self_capture(&self, player: Player, mv: Move) -> bool {
         return if let Move::Point(p) = mv {
             let mut next_board = self.board.clone();
-            println!("{:?}", next_board);
             next_board.place_stone(player, p);
             let next_string = next_board.get_string(p);
             next_string.is_some() && next_string.unwrap().liberties_count() == 0

@@ -9,6 +9,7 @@ mod player;
 mod point;
 mod stones_string;
 mod agent;
+mod agents;
 
 pub struct Game {
     pub human: Player,
