@@ -40,7 +40,7 @@ mod tests {
 
     #[test]
     fn test_random_bot_new() {
-        let board_size = 6;
+        let board_size = 9;
         let mut game = GameState::new(board_size);
         let mut bots = HashMap::new();
         bots.insert(Player::Black, RandomBot {});

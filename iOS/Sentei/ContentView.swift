@@ -13,19 +13,11 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text(core.view.count)
+            Text("\(core.view.isWhite ? "white" : "black")")
+            Text(core.view.move)
             HStack {
                 ActionButton(label: "Reset", color: .red) {
-                    core.update(.reset)
-                }
-                ActionButton(label: "Inc", color: .green) {
-                    core.update(.increment)
-                }
-                ActionButton(label: "Dec", color: .yellow) {
-                    core.update(.decrement)
+                    core.update(.makeMove)
                 }
             }
         }

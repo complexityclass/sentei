@@ -32,3 +32,9 @@ class Core: ObservableObject {
         }
     }
 }
+
+extension ViewModel {
+    var move: String {
+        "\(self.row):\(self.col)"
+    }
+}
